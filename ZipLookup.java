@@ -26,15 +26,10 @@ public class ZipLookup {
 		
 		BufferedReader csvReader = new BufferedReader(new FileReader("us-zip-code-latitude-and-longitude.csv"));
 		BufferedReader csvReader2 = new BufferedReader(new FileReader("us-zip-code-latitude-and-longitude.csv"));
+		
+		// call the method to find the lat/long coordinates of the user-entered ZIP code
 		String[] targetCoordinates = find(target, csvReader);
-
 		showMatches(targetCoordinates, csvReader2, miles);
-
-		// testing
-		// for (int i = 0; i < targetCoordinates.length; i++) {
-		// 	System.out.println(targetCoordinates[i]);
-		// }
-
 	}
 
 	// program introudction for user
@@ -49,7 +44,7 @@ public class ZipLookup {
 	}
 
 	// Searches for the given string in the input file; if found,
-	// returns the coordinates; otherwise returns and array of "0"s.
+	// returns the coordinates; otherwise returns an array of "0"s.
 	public static String[] find(String target, BufferedReader csvReader) throws IOException {
 		String[] row = new String[7];
 		while ((csvReader.readLine()) != null) {
@@ -76,26 +71,19 @@ public class ZipLookup {
     		double lat2 = Double.parseDouble(row[3]);
     		double long2 = Double.parseDouble(row[4]);
     		double distance = distance(lat1, long1, lat2, long2);
-    		//System.out.println(distance + " <-> " + miles);
 
     		if (distance < miles) {
     			System.out.printf("    %s  %s %s, %3.2f miles\n", row[0], row[1], row[2], distance);
-    			// System.out.println("lat1 " + lat1 + " = " + Math.toRadians(lat1));
-    			// System.out.println("long1 " + long1 + " = " + Math.toRadians(long1));
-    			// System.out.println("lat2 " + lat2 + " = " + Math.toRadians(lat2));
-    			// System.out.println("long2 " + long2 + " = " + Math.toRadians(long2));
     		}
 		}
 		csvReader.close();
 	}
 
+	// calculate distance (miles) between two points of lat/long coordinates
 	public static double distance(double lat1, double long1, double lat2, double long2) {
 		lat1 = Math.toRadians(lat1);
-		
 		long1 = Math.toRadians(long1);
-		
 		lat2 = Math.toRadians(lat2);
-		
 		long2 = Math.toRadians(long2);
 		
 		double theCos = Math.sin(lat1) * Math.sin(lat2) 
